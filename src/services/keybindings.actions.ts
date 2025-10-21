@@ -197,6 +197,7 @@ function onCmd(name: string): void {
   else if (name === 'toggle_branch') onKeyToggleBranch()
   else if (name === 'fold_inact_branches') onKeyFoldInactiveBranches()
   else if (name === 'activate_prev_active_tab_c') Tabs.tabFlip()
+  else if (name === 'activate_prev_active_tab_diff_panel') onKeyActPrevActTabDiffPanel()
   else if (name === 'activate_prev_active_tab') {
     Tabs.switchToRecentlyActiveTab(SwitchingTabScope.global, -1)
   } else if (name === 'activate_next_active_tab') {
@@ -931,6 +932,22 @@ function onKeyFoldInactiveBranches(): void {
   if (!Utils.isTabsPanel(activePanel)) return
 
   Tabs.foldAllInactiveBranches(activePanel.tabs.map(rt => Tabs.byId[rt.id] as Tab) ?? [])
+}
+
+function onKeyActPrevActTabDiffPanel(): void {
+  const actTab = Tabs.byId[Tabs.activeId]
+  if (!actTab) return
+
+  const history = Tabs.getActiveTabsHistory()
+  const prevTabId = history.actTabs.findLast(id => {
+    const tab = Tabs.byId[id]
+    if (
+      (Settings.state.pinnedTabsPosition === 'panel' && actTab.panelId === tab?.panelId) ||
+      (!actTab.pinned && !tab?.pinned && actTab.panelId === tab?.panelId)
+    ) return false
+    return id !== Tabs.activeId
+  })
+  if (prevTabId !== undefined) browser.tabs.update(prevTabId, { active: true })
 }
 
 function onKeyTabsIndent(): void {
