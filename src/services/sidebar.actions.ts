@@ -745,6 +745,8 @@ export function getPanelTooltip(panel: Panel): string {
       return panel.name + '\n' + translate('nav.tabs_panel_tooltip_mid_convert')
     } else if (Settings.state.navTabsPanelMidClickAction === 'conv_hide') {
       return panel.name + '\n' + translate('nav.tabs_panel_tooltip_mid_conv_hide')
+    } else if (Settings.state.navTabsPanelMidClickAction === 'discard_inact') {
+      return panel.name + '\n' + translate('nav.tabs_panel_tooltip_mid_discard_inact')
     }
   }
   if (Utils.isBookmarksPanel(panel)) {

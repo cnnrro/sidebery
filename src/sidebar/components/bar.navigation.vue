@@ -523,6 +523,12 @@ async function onNavMouseDown(e: MouseEvent, item: NavItem) {
         const bookmarksPanel = await Sidebar.convertToBookmarksPanel(panel)
         if (bookmarksPanel) Sidebar.hidePanel(bookmarksPanel.id)
       }
+
+      // Discard(unload) inactive tabs
+      if (Settings.state.navTabsPanelMidClickAction === 'discard_inact') {
+        const ids = panel.tabs.filter(t => !t.active).map(t => t.id)
+        if (ids.length) Tabs.discardTabs(ids)
+      }
     }
 
     if (item.type === PanelType.bookmarks) {

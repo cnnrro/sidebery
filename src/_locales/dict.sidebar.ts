@@ -818,6 +818,17 @@ export const sidebarTranslations: Translations = {
     zh_TW: '中鍵點選：轉換為書籤並隱藏面板',
     ja: '中クリック：ブックマークに変換してパネルを非表示',
   },
+  'nav.tabs_panel_tooltip_mid_discard_inact': {
+    en: 'Middle click: Unload inactive tabs',
+    de: 'Mittelklick: Inaktive Tabs entladen',
+    fr: 'Clic milieu: Décharger les onglets inactifs',
+    hu: 'Középső kattintás: inaktív lapok kisöprése',
+    pl: 'Środkowy przycisk myszy: Uśpij nieaktywne karty',
+    ru: 'Средняя кнопка мыши: Выгрузить неактивные вкладки',
+    zh_CN: '中键单击：卸载非活动标签页',
+    zh_TW: '中鍵點選：卸載非活動分頁',
+    ja: '中クリック：非アクティブなタブをアンロード',
+  },
   'nav.bookmarks_panel_tooltip_mid_convert': {
     en: 'Middle click: Convert to tabs panel',
     de: 'Mittelklick: In Tab-Panel umwandeln',

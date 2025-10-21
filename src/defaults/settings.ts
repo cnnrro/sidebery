@@ -279,7 +279,7 @@ export const SETTINGS_OPTIONS = {
   navActBookmarksPanelLeftClickAction: ['scroll', 'none'],
   navTabsPanelMidClickAction: [
     'rm_act_tab', 'rm_all', 'rm_rmp', 'discard', 'hide', 'bookmark', 'bkm_rmp', 'convert',
-    'conv_hide', 'none'
+    'conv_hide', 'discard_inact', 'none'
   ],
   navBookmarksPanelMidClickAction: ['convert', 'none'],
   tabsUrlInTooltip: ['full', 'stripped', 'none'],
