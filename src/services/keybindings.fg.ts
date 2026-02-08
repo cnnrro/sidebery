@@ -1018,10 +1018,11 @@ function onKeyActPrevActTabDiffPanel(): void {
   const prevTabId = history.actTabs.findLast(id => {
     const tab = Tabs.byId[id]
     if (
-      (!tab) ||
+      !tab ||
       (Settings.state.pinnedTabsPosition === 'panel' && actTab.panelId === tab?.panelId) ||
       (!actTab.pinned && !tab?.pinned && actTab.panelId === tab?.panelId)
-    ) return false
+    )
+      return false
     return id !== Tabs.activeId
   })
 
