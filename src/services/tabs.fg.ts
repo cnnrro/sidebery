@@ -139,6 +139,7 @@ export function mutateNativeTabToSideberyTab(nativeTab: T.NativeTab): T.Tab {
       sel: tab.sel,
       selLock: tab.selLock,
       warn: tab.warn,
+      notificationBadgeCount: null,
       updated: tab.updated,
       unread: !!tab.unread,
       flash: false,
@@ -178,6 +179,7 @@ function createReactiveProps(tab: T.Tab): T.ReactiveTabProps {
     sel: tab.sel,
     selLock: tab.selLock,
     warn: tab.warn,
+    notificationBadgeCount: null,
     updated: tab.updated,
     unread: !!tab.unread,
     flash: false,
@@ -191,6 +193,37 @@ function createReactiveProps(tab: T.Tab): T.ReactiveTabProps {
   else {
     Logs.warn('Tabs.createReactiveProps: No reactFn')
     return rProps
+  }
+}
+
+export function updateNotificationBadgeCountTabs(): void {
+  const regexp = new RegExp(Settings.state.tabsNotificationBadgeRegExpPattern)
+  for (const tab of Tabs.list) {
+    updateNotificationBadgeCountTab(tab, regexp)
+  }
+}
+
+export function updateNotificationBadgeCountTab(
+  tab: T.Tab,
+  regexp: RegExp | undefined = undefined
+): void {
+  if (
+    Settings.state.tabsNotificationBadgeScope === 'none' ||
+    (Settings.state.tabsNotificationBadgeScope === 'norm' && tab.pinned) ||
+    (Settings.state.tabsNotificationBadgeScope === 'pin' && !tab.pinned)
+  ) {
+    tab.reactive.notificationBadgeCount = null
+    return
+  }
+
+  const matches = (regexp ?? new RegExp(Settings.state.tabsNotificationBadgeRegExpPattern)).exec(
+    tab.title
+  )
+  if (!matches) {
+    tab.reactive.notificationBadgeCount = null
+  } else {
+    const notificationBadgeCount = matches.find((e, i) => i > 0 && e) ?? null
+    tab.reactive.notificationBadgeCount = notificationBadgeCount
   }
 }
 
@@ -268,6 +301,7 @@ export async function load(src?: LoadSrc): Promise<void> {
 
   if (Settings.state.colorizeTabs) Tabs.colorizeTabs()
   if (Settings.state.colorizeTabsBranches) Tabs.colorizeBranches()
+  if (Settings.state.tabsNotificationBadgeScope !== 'none') Tabs.updateNotificationBadgeCountTabs()
 
   ready = true
 

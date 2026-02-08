@@ -223,6 +223,9 @@
     "activate_prev_active_tab_c": {
       "description": "__MSG_KbActPrevActTabC__"
     },
+    "activate_prev_active_tab_diff_panel": {
+      "description": "__MSG_KbActPrevActTabDiffPanel__"
+    },
     "move_tab_to_active": {
       "description": "__MSG_KbMoveTabToAct__"
     },

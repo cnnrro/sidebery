@@ -137,6 +137,7 @@
     h2 {{translate('settings.kb_active_tabs_history')}}
     span.header-shadow
     KeybindingField.-no-separator(:keybinding="Keybindings.reactive.byName.activate_prev_active_tab_c")
+    KeybindingField(:keybinding="Keybindings.reactive.byName.activate_prev_active_tab_diff_panel")
     KeybindingField(:keybinding="Keybindings.reactive.byName.activate_prev_active_tab")
     KeybindingField(:keybinding="Keybindings.reactive.byName.activate_next_active_tab")
     KeybindingField(:keybinding="Keybindings.reactive.byName.activate_panel_prev_active_tab")

@@ -730,6 +730,17 @@
     "zh_TW": "在當前和先前分頁間交替",
     "ja": "以前にアクティブだったタブをアクティブにする（タブ切り替え）"
   },
+  "KbActPrevActTabDiffPanel": {
+    "en": "Activate previously active tab from a different panel",
+    "de": "Aktiviere zuvor aktiven Tab aus anderem Panel",
+    "fr": "Activer l'onglet précédemment actif d'un autre panneau",
+    "hu": "Aktív lap aktiválása egy másik panelről",
+    "pl": "Aktywuj poprzednio aktywną kartę z innego panelu",
+    "ru": "Активировать ранее активную вкладку из другой панели",
+    "zh_CN": "激活来自不同面板的先前活动标签页",
+    "zh_TW": "啟用來自不同面板的先前分頁",
+    "ja": "別のパネルから以前にアクティブだったタブをアクティブ化"
+  },
   "KbActPrevActTab": {
     "en": "Active tabs history: Back",
     "de": "Tab-Aktivierungschronik: Zurück",
