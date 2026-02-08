@@ -13,6 +13,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   copyMultiBullet: '',
   copyTemplates: 'HTML:%B<a href="%U">%CT</a>\nMarkdown:%B[%CT](%U)',
   updTooltipDelay: 100,
+  selLen: true,
 
   // Context menu
   ctxMenuNative: false,
@@ -20,16 +21,25 @@ export const DEFAULT_SETTINGS: SettingsState = {
   ctxMenuRenderIcons: true,
   ctxMenuIgnoreContainers: '',
 
+  // Address bar (Omnibox)
+  omniReopenInCtr: true,
+  omniReopenInCtrPrefix: '',
+  omniSwitchToPanel: true,
+  omniSwitchToPanelPrefix: '',
+  omniMoveToPanel: true,
+  omniMoveToPanelPrefix: '',
+  omniMoveToGroup: true,
+  omniMoveToGroupPrefix: '',
+
   // Nav bar
   navBarLayout: 'horizontal',
   navBarInline: true,
   navBarSide: 'left',
-  hideAddBtn: false,
-  hideSettingsBtn: false,
   navBtnCount: true,
   hideEmptyPanels: true,
   hideDiscardedTabPanels: false,
   navActTabsPanelLeftClickAction: 'none',
+  navActTabsPanelLeftClickTabPos: 'general',
   navActBookmarksPanelLeftClickAction: 'none',
   navTabsPanelMidClickAction: 'discard',
   navBookmarksPanelMidClickAction: 'none',
@@ -56,16 +66,21 @@ export const DEFAULT_SETTINGS: SettingsState = {
   dndExpDelay: 750,
   dndExpMod: 'none',
   dndOutside: 'win',
+  dndOutsideThresholdTimeout: 350,
   dndActTabFromLink: true,
   dndActSearchTab: true,
   dndMoveTabs: false,
   dndMoveBookmarks: false,
+  dndTabToPanelPos: 'end',
 
   // Search
   searchBarMode: 'dynamic',
   searchPanelSwitch: 'same_type',
+  searchTabSwitch: false,
+  searchMenuTrig: false,
   searchBookmarksShortcut: '',
   searchHistoryShortcut: '',
+  searchInputTimeout: 300,
 
   // Tabs
   warnOnMultiTabClose: 'collapsed',
@@ -97,10 +112,12 @@ export const DEFAULT_SETTINGS: SettingsState = {
   tabSwitchDelay: 0,
   forceDiscard: true,
   tabUpdDelay: 150,
+  forceUpdTooltip: false,
 
   // New tab position
   moveNewTabPin: 'start',
   moveNewTabParent: 'last_child',
+  moveNewTabParentIndent: false,
   moveNewTabParentActPanel: false,
   moveNewTabButton: 'end',
   moveNewTabButtonActivePin: 'start',
@@ -113,6 +130,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   pinnedTabsList: false,
   pinnedAutoGroup: false,
   pinnedNoUnload: false,
+  pinnedNoUnloadExplicit: true,
   pinnedForcedDiscard: false,
 
   // Tabs tree
@@ -210,6 +228,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   wheelAccumulationY: true,
   navSwitchPanelsDelay: 128,
   scrollThroughTabs: 'none',
+  scrollThroughTabsGlobPinIsolate: true,
   scrollThroughVisibleTabs: true,
   scrollThroughTabsSkipDiscarded: true,
   scrollThroughTabsExceptOverflow: true,
@@ -229,7 +248,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   tabsSecondClickActPrevNoUnload: true,
   shiftSelAct: true,
   ctrlSelAct: true,
-  activateOnMouseUp: false,
+  activateOnMouseUp: true,
   tabCloseOnMouseUp: true,
   tabLongLeftClick: 'none',
   tabLongRightClick: 'none',
@@ -239,9 +258,12 @@ export const DEFAULT_SETTINGS: SettingsState = {
   tabMiddleClickShift: 'duplicate',
   tabCloseMiddleClick: 'close',
   tabsPanelLeftClickAction: 'none',
+  tabsPanelLeftClickTabPos: 'general',
   tabsPanelDoubleClickAction: 'tab',
+  tabsPanelDoubleClickTabPos: 'general',
   tabsPanelRightClickAction: 'menu',
   tabsPanelMiddleClickAction: 'tab',
+  tabsPanelMiddleClickTabPos: 'general',
   newTabMiddleClickAction: 'new_child',
   bookmarksLeftClickAction: 'open_in_act',
   bookmarksLeftClickActivate: false,
@@ -271,6 +293,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
   // Keybindings
   selectActiveTabFirst: true,
   selectCyclic: false,
+  loopPanelsIgnoreHidden: false,
+  kbNewTabInPanelPos: 'general',
 }
 
 // prettier-ignore
@@ -342,6 +366,7 @@ export const SETTINGS_OPTIONS = {
   dndExp: ['pointer', 'hover', 'none'],
   dndExpMod: ['alt', 'shift', 'ctrl', 'none'],
   dndOutside: ['win', 'data'],
+  dndTabToPanelPos: ['start', 'end'],
   animationSpeed: ['fast', 'norm', 'slow'],
   treeRmOutdent: ['branch', 'first_child'],
   colorizeTabsSrc: ['domain', 'container'],
@@ -352,4 +377,5 @@ export const SETTINGS_OPTIONS = {
   oldBookmarksAfterSave: ['ask', 'del', 'keep'],
   switchPanelAfterSwitchingTab: ['always', 'mouseleave', 'no'],
   scrollPanelAfterSwitchingTab: ['always', 'mouseleave', 'no'],
+  newTabInPanelPos: ['general', 'btn', 'start', 'end'],
 } as const

@@ -2,7 +2,6 @@ import { SETTINGS_OPTIONS } from '../defaults'
 
 export interface SettingsState {
   // General
-  version?: string // DEPR
   nativeScrollbars: boolean
   nativeScrollbarsThin: boolean
   nativeScrollbarsLeft: boolean
@@ -14,6 +13,7 @@ export interface SettingsState {
   copyMultiBullet: string
   copyTemplates: string
   updTooltipDelay: number
+  selLen: boolean
 
   // Context menu
   ctxMenuNative: boolean
@@ -21,12 +21,20 @@ export interface SettingsState {
   ctxMenuRenderIcons: boolean
   ctxMenuIgnoreContainers: string
 
+  // Address bar (Omnibox)
+  omniReopenInCtr: boolean
+  omniReopenInCtrPrefix: string
+  omniSwitchToPanel: boolean
+  omniSwitchToPanelPrefix: string
+  omniMoveToPanel: boolean
+  omniMoveToPanelPrefix: string
+  omniMoveToGroup: boolean
+  omniMoveToGroupPrefix: string
+
   // Nav bar
   navBarLayout: (typeof SETTINGS_OPTIONS.navBarLayout)[number]
   navBarInline: boolean
   navBarSide: (typeof SETTINGS_OPTIONS.navBarSide)[number]
-  hideAddBtn: boolean // DEPR
-  hideSettingsBtn: boolean // DEPR
   navBtnCount: boolean
   skipEmptyPanels: boolean
   hideEmptyPanels: boolean
@@ -34,6 +42,7 @@ export interface SettingsState {
   navSwitchPanelsWheel: boolean
   navSwitchPanelsDelay: number
   navActTabsPanelLeftClickAction: (typeof SETTINGS_OPTIONS.navActTabsPanelLeftClickAction)[number]
+  navActTabsPanelLeftClickTabPos: (typeof SETTINGS_OPTIONS.newTabInPanelPos)[number]
   navActBookmarksPanelLeftClickAction: (typeof SETTINGS_OPTIONS.navActBookmarksPanelLeftClickAction)[number]
   navTabsPanelMidClickAction: (typeof SETTINGS_OPTIONS.navTabsPanelMidClickAction)[number]
   navBookmarksPanelMidClickAction: (typeof SETTINGS_OPTIONS.navBookmarksPanelMidClickAction)[number]
@@ -56,16 +65,21 @@ export interface SettingsState {
   dndExpDelay: number
   dndExpMod: (typeof SETTINGS_OPTIONS.dndExpMod)[number]
   dndOutside: (typeof SETTINGS_OPTIONS.dndOutside)[number]
+  dndOutsideThresholdTimeout: number
   dndActTabFromLink: boolean
   dndActSearchTab: boolean
   dndMoveTabs: boolean
   dndMoveBookmarks: boolean
+  dndTabToPanelPos: (typeof SETTINGS_OPTIONS.dndTabToPanelPos)[number]
 
   // Search
   searchBarMode: (typeof SETTINGS_OPTIONS.searchBarMode)[number]
   searchPanelSwitch: (typeof SETTINGS_OPTIONS.searchPanelSwitch)[number]
+  searchTabSwitch: boolean
+  searchMenuTrig: boolean
   searchBookmarksShortcut: string
   searchHistoryShortcut: string
+  searchInputTimeout: number
 
   // Tabs
   warnOnMultiTabClose: (typeof SETTINGS_OPTIONS.warnOnMultiTabClose)[number]
@@ -96,10 +110,12 @@ export interface SettingsState {
   tabSwitchDelay: number
   forceDiscard: boolean
   tabUpdDelay: number
+  forceUpdTooltip: boolean
 
   // New tab position
   moveNewTabPin: (typeof SETTINGS_OPTIONS.moveNewTabPin)[number]
   moveNewTabParent: (typeof SETTINGS_OPTIONS.moveNewTabParent)[number]
+  moveNewTabParentIndent: boolean
   moveNewTabParentActPanel: boolean
   moveNewTabButton: (typeof SETTINGS_OPTIONS.moveNewTab)[number]
   moveNewTabButtonActivePin: (typeof SETTINGS_OPTIONS.moveNewTabActivePin)[number]
@@ -112,10 +128,12 @@ export interface SettingsState {
   pinnedTabsList: boolean
   pinnedAutoGroup: boolean
   pinnedNoUnload: boolean
+  pinnedNoUnloadExplicit: boolean
   pinnedForcedDiscard: boolean
 
   // Tabs tree
   tabsTree: boolean
+  groupOnOpen?: boolean // DEPR
   tabsTreeLimit: (typeof SETTINGS_OPTIONS.tabsTreeLimit)[number]
   autoFoldTabs: boolean
   autoFoldTabsExcept: (typeof SETTINGS_OPTIONS.autoFoldTabsExcept)[number]
@@ -167,7 +185,6 @@ export interface SettingsState {
   nativeHighlight: boolean
 
   // Bookmarks
-  bookmarksPanel?: boolean // DEPR
   warnOnMultiBookmarkDelete: (typeof SETTINGS_OPTIONS.warnOnMultiBookmarkDelete)[number]
   askNewBookmarkPlace: boolean
   autoCloseBookmarks: boolean
@@ -186,13 +203,11 @@ export interface SettingsState {
   // Appearance
   fontSize: (typeof SETTINGS_OPTIONS.fontSize)[number]
   fontFamily: string
-  bgNoise?: boolean // DEPR
   animations: boolean
   animationSpeed: (typeof SETTINGS_OPTIONS.animationSpeed)[number]
   theme: (typeof SETTINGS_OPTIONS.theme)[number]
   density: (typeof SETTINGS_OPTIONS.density)[number]
   colorScheme: (typeof SETTINGS_OPTIONS.colorScheme)[number]
-  style?: string // DEPR
 
   // Snapshots
   snapNotify: boolean
@@ -207,12 +222,12 @@ export interface SettingsState {
   snapMdFullTree: boolean
 
   // Mouse
-  hScrollThroughPanels?: boolean // DEPR
   hScrollAction: (typeof SETTINGS_OPTIONS.hScrollAction)[number]
   onePanelSwitchPerScroll: boolean
   wheelAccumulationX: boolean
   wheelAccumulationY: boolean
   scrollThroughTabs: (typeof SETTINGS_OPTIONS.scrollThroughTabs)[number]
+  scrollThroughTabsGlobPinIsolate: boolean
   scrollThroughVisibleTabs: boolean
   scrollThroughTabsSkipDiscarded: boolean
   scrollThroughTabsExceptOverflow: boolean
@@ -242,9 +257,12 @@ export interface SettingsState {
   tabMiddleClickShift: (typeof SETTINGS_OPTIONS.tabMiddleClickModifier)[number]
   tabCloseMiddleClick: (typeof SETTINGS_OPTIONS.tabCloseMiddleClick)[number]
   tabsPanelLeftClickAction: (typeof SETTINGS_OPTIONS.tabsPanelLeftClickAction)[number]
+  tabsPanelLeftClickTabPos: (typeof SETTINGS_OPTIONS.newTabInPanelPos)[number]
   tabsPanelDoubleClickAction: (typeof SETTINGS_OPTIONS.tabsPanelDoubleClickAction)[number]
+  tabsPanelDoubleClickTabPos: (typeof SETTINGS_OPTIONS.newTabInPanelPos)[number]
   tabsPanelRightClickAction: (typeof SETTINGS_OPTIONS.tabsPanelRightClickAction)[number]
   tabsPanelMiddleClickAction: (typeof SETTINGS_OPTIONS.tabsPanelMiddleClickAction)[number]
+  tabsPanelMiddleClickTabPos: (typeof SETTINGS_OPTIONS.newTabInPanelPos)[number]
   newTabMiddleClickAction: (typeof SETTINGS_OPTIONS.newTabAction)[number]
   bookmarksLeftClickAction: (typeof SETTINGS_OPTIONS.bookmarksLeftClickAction)[number]
   bookmarksLeftClickActivate: boolean
@@ -274,4 +292,6 @@ export interface SettingsState {
   // Keybindings
   selectActiveTabFirst: boolean
   selectCyclic: boolean
+  loopPanelsIgnoreHidden: boolean
+  kbNewTabInPanelPos: (typeof SETTINGS_OPTIONS.newTabInPanelPos)[number]
 }
