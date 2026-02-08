@@ -4,6 +4,123 @@
 
 ### Added
 
+- Tabs: A setting to control switching between globally-pinned and normal tabs with mouse wheel or keybinding  
+- Restore scroll positions in bookmarks and history sub-panels  
+  - after reopening sub-panel  
+  - after exiting search mode  
+- A setting to control explicit unloading of pinned tabs  
+- Setup-page: Mark changed (non-default) settings  
+  Also, ctrl+alt+click to copy dbg info (prop name)
+- Setting field improvements (by [@FurkanKambay](https://github.com/FurkanKambay): [#2332](https://github.com/mbnuqw/sidebery/issues/2332)) ([#2275](https://github.com/mbnuqw/sidebery/issues/2275))  
+- Search: Option to keep searching after triggering context menu option
+- Add hidden 'searchInputTimeout' pref to configure delay between typing and search
+- Option to keep search results after switching tabs (resolves [#1527](https://github.com/mbnuqw/sidebery/issues/1527))  
+- Keybindings: Exit from search mode with 'reset' keybinding
+- Omnibox / Address bar (`= ` preffixed commands in address bar):  
+  - Reopening active tab in a different container (by [@ErichDonGubler](https://github.com/ErichDonGubler): [#1992](https://github.com/mbnuqw/sidebery/issues/1992))
+  - Moving active tab to panel
+  - Switching panel
+  - Moving active tab to group (related: [#619](https://github.com/mbnuqw/sidebery/issues/619), [#1677](https://github.com/mbnuqw/sidebery/issues/1677))  
+
+  To start, focus the address bar (Ctrl+L/Cmd+L), then input "=" followed by a space, then start typing target container/panel/group name (case-insensitive). Choose desired command from the list or just press Enter to use the first one.  
+- Setting for configurable tab drop position (by [@Victor239](https://github.com/Victor239): [#2317](https://github.com/mbnuqw/sidebery/issues/2317))
+- Allow to config position of the new tab created by:  
+  - Keybinding: "Open a new tab in the active panel"
+  - Left click on the active tab panel
+  - Left click on the empty space of tab panel
+  - Double click on the empty space of tab panel
+  - Middle click on the empty space of tab panel  
+
+  Default value: 'general rule' - will preserve current behavior.  
+  Other values: 'rule of new tab button', 'panel start', 'panel end'.  
+- Keybinding: Select tabs branch
+- Selection: Show the number of selected tabs/bookmarks (resolves [#2108](https://github.com/mbnuqw/sidebery/issues/2108))  
+  Can be turned off with the hidden setting: `selLen`
+- Add the ability to cycle through panels (all or visible only) (by [@seppulcro](https://github.com/seppulcro): [#1829](https://github.com/mbnuqw/sidebery/issues/1829)) (resolves [#686](https://github.com/mbnuqw/sidebery/issues/686))  
+- Bookmarks: Show custom color and container mark.
+- Tabs/Bookmarks: Preserve custom titles on panel conversion
+- Tabs: Hidden pref `forceUpdTooltip` to calc tooltip (title attr) right after title change. (resolves [#2292](https://github.com/mbnuqw/sidebery/issues/2292))  
+
+### Fixed
+
+- Context-menu: Hovered option with pin button changes the width of the popup
+- Search/tabs: Switching tabs with the mouse wheel or keybindings ignores search result  
+  Switch between filtered tabs.
+- Bookmarks: Sidebery data is copied along with the titles.  
+  Copy parsed titles if possible.
+- Keep "Prevent pinned tabs from unloading" setting enabled when pinned tabs are global (by [@FurkanKambay](https://github.com/FurkanKambay): [#2344](https://github.com/mbnuqw/sidebery/issues/2344))  
+- Wrong initial panel if Firefox started without session restore
+- Tabs: Wrong indent for tab created with double/middle-click on the panel  
+- Select-field: Double-switch when clicking on the input option
+- Bookmarks: Unaligned separator
+- Tabs not initializing on creating the first tab panel
+- Broken focus/select behavior in panel config popup
+- Impossible to remove the last tab-panel without closing its tabs
+- Make the 'discard tab panel' middle click action respect the `pinnedNoUnload` setting (by [@FurkanKambay](https://github.com/FurkanKambay): [#2337](https://github.com/mbnuqw/sidebery/issues/2337))
+- Bookmarks: Incorrect processing of empty title  
+  - Handle change event with empty title
+  - Allow to set empty title (to align with Firefox behavior)
+  - Fix broken layout of bookmarks popup when location folder has empty title (show '---', later should be replaced with '(no title)')  
+- Search/tabs: Broken multi-selection
+- Search/tabs: Results is not updated after reopening folded tab
+- Search: Unneeded delay on clicking 'x' button in the search-bar  
+- Search/Drag and drop: Broken drag and drop with active search  
+  - stop search on dnd start
+  - continue search on dnd end
+- Search/tabs: Unexpected positions of folded tabs  
+- Search/tabs: Focus flickering on switching tabs
+- Search/tabs: Search results doesn't update after move/pin/unpin
+- Search: Search bar in sidebar doesn't hide after pressing ESC in popup with empty value  
+- Search/tabs: Unexpected tabs closing in search mode  
+  Ignore 'close folded/all child tabs' settings in search mode because in search mode tabs tree is destructured to a plain list and these settings are pointless.
+- Search: Auto selecting the first result hinders more than helps, to select it press the Down arrow  
+- Search popup: No focus sometimes (resolves [#2213](https://github.com/mbnuqw/sidebery/issues/2213))  
+- Keybindings: Can't exit from search mode if search query it empty
+- Search tabs: The last found tab isn't selected on Up key without initial selection  
+- Duplicate as a child not working for long click (by [@liquiddandruff](https://github.com/liquiddandruff): [#2325](https://github.com/mbnuqw/sidebery/issues/2325)) (resolves [#1604](https://github.com/mbnuqw/sidebery/issues/1604))  
+- Drag and drop: False-positive triggering of a new window creation on drop ([#2321](https://github.com/mbnuqw/sidebery/issues/2321))  
+- Tabs.bg: Auto-reopening (in different container) with closed sidebar works with too big delay  
+- OnKeySwitchToPrevPanel() should switch instead of only activate (by [@cnnrro](https://github.com/cnnrro): [#2264](https://github.com/mbnuqw/sidebery/issues/2264))
+- Tabs/selection: Folded branch is not selected on the edge of selection range  
+- Tabs: Wrong scaling of the in-page preview (resolves [#2139](https://github.com/mbnuqw/sidebery/issues/2139))  
+  Wrong initialization process of the preview script:
+  referenceDevicePixelRatio was used with default '1' value before the
+  actual value was received.
+- Window selection modal does not scroll (resolves [#2303](https://github.com/mbnuqw/sidebery/issues/2303))  
+- Switching between hidden panels doesn't scroll the list of hidden panels  
+- Tab panel: A tab created with double click on empty space has unexpected position  
+  Use 'new tab bar' config for positioning it.
+- Tabs/move: tabs are reordered after unpinning  
+  Happens b/c each next tab is placed by Firefox before the prev.  
+  Reverse the tab list for unpinning.
+- Keybindings: Single active tab is selected on moving with keybinding  
+  Don't select it (if it's just active tab)
+- Snapshots viewer: Tabs of unknown panel are not displayed  
+  Display tabs of unknown panel (panelId: -1) at the bottom of the list in the default panel section.  
+  ([#2049](https://github.com/mbnuqw/sidebery/issues/2049))
+- Bookmarks: No container info / custom color when bookmarking tab[s].  
+  Properly preserve tabs custom colors and container info.
+- Sidebar: Some technical data is not removed on restoring tab panel from bookmarks which might cause duplicating that data after next save/restore cycle.  
+- Bookmarks.open: Wrong handling of bookmarks folder with long name.
+- Nav-bar style: last panel in hidden-panels-popup doesn't have rounding corners at the bottom
+- Nav-bar style: redundant padding before side-positioned pinned tabs
+
+### Localization
+
+- Allow translating a header and fix a French translation (by [@ariasuni](https://github.com/ariasuni): [#2315](https://github.com/mbnuqw/sidebery/issues/2315))  
+- Fr: "nouvelle" instead of "existante" (resolves [#2299](https://github.com/mbnuqw/sidebery/issues/2299))  
+- Fr: fix the translation for 'Unload' (by [@cluxter](https://github.com/cluxter): [#2291](https://github.com/mbnuqw/sidebery/issues/2291))  
+
+### Performance Improvements
+
+- Bookmarks: Minor overall speedup for drag and drop, selection and search
+
+
+## v5.4.0 - 2025.11.05
+
+### Added
+
+- Drag and drop: handle native bookmark folders and link lists
 - Tabs: an option to trigger the close button action on mouse-up (resolves [#1788](https://github.com/mbnuqw/sidebery/issues/1788), [#1437](https://github.com/mbnuqw/sidebery/issues/1437), [#1682](https://github.com/mbnuqw/sidebery/issues/1682), [#299](https://github.com/mbnuqw/sidebery/issues/299))
 - New tab position for tabs opened with the sidebery new tab button (resolves [#2008](https://github.com/mbnuqw/sidebery/issues/2008), [#1096](https://github.com/mbnuqw/sidebery/issues/1096))
 - BrowserAction context menu option for reopening cached windows
@@ -41,6 +158,38 @@
 
 ### Fixed
 
+- Tabs: incorrect url update of the group page linked to pinned tab (related [#2255](https://github.com/mbnuqw/sidebery/issues/2255))  
+- Tabs: incorrectly calculated (shallow) invisibility of the new tab
+- Tabs: wrong custom color/title, folded state, position after undo close (from notification)  
+  - Restore custom color/title and folded state (use Tabs.open(...))
+  - Try to restore original position (parent/index)
+- Drag and drop: native bkm folder is not included, only its children
+- Keybindings: "Select all" keybinding doesn't select folded tabs (resolves [#2128](https://github.com/mbnuqw/sidebery/issues/2128))  
+- Drag and drop/bookmarks: wrong parentId on dropping to root lvl of bkm panel (resolves [#2140](https://github.com/mbnuqw/sidebery/issues/2140))  
+- Cannot open bookmarks or history visits if there is no tab panels (resolves [#2147](https://github.com/mbnuqw/sidebery/issues/2147))  
+- Snapshots: overflowed delete button (resolves [#2194](https://github.com/mbnuqw/sidebery/issues/2194))  
+- Site config popup: incorrect url parsing (resolves [#2195](https://github.com/mbnuqw/sidebery/issues/2195))  
+- Containers: update tab colorization after containers update if colorization is based on containers
+- Tabs/containers: created tab has unknown container (resolves [#2237](https://github.com/mbnuqw/sidebery/issues/2237))  
+  Handle new container events in the sidebar to guarantee that container of a new containered tab is known.
+- Tabs: incorrect handling of unloaded tabs opened from another addon (resolves [#2249](https://github.com/mbnuqw/sidebery/issues/2249))  
+- Tabs: possible tree breakage and changing configured behavior with 'do not move it' setting (resolves [#2280](https://github.com/mbnuqw/sidebery/issues/2280))  
+  - Added sub-setting for controlling branch creation logic. It works only for the 'do not move it' option. For the other options it's inactive and visualizes the behavior ('on' for the 'first/last child', 'off' otherwise).
+  - Added the upgrade logic to preserve previous behavior with 'do not move it' option.
+  - Fixed incorrectly found target panel with 'do not move it' option and the `browser.tabs.insertRelatedAfterCurrent` set to false
+- A rare broken initialization with empty storage caused by race condition:  
+  Both sidebar and bg generate default sidebar configs with different panel ids.
+  changed:
+  - In sidebar, wait until bg set default sidebar config (or 5sec).  
+  - In sidebar, setup sidebar listeners after sidebar is loaded.  
+- Tabs: broken tree after cancellation of auto-closing child tabs in some cases (maybe related: [#2267](https://github.com/mbnuqw/sidebery/issues/2267))  
+  This only applies to cases when the parent tab in the middle of a tree was closed by Firefox (e.g. Ctrl+W) or by another addon. And with these settings:  
+  'Warn on trying to close multiple tabs' = 'any'  
+  'Close child tabs along with parent' = all  
+  Changed:
+  - Update parentId of child tabs that should've been removed (but it was canceled)  
+  - Try to restore the removed parent tab  
+  - Cancel the confirm popup of the previous close event in onTabRemoved  
 - Tabs: hidden native tabs keeps being highlighted  
   Firefox ignores `browser.tabs.highlight(...)` call for hidden tabs
 - Tab: prevent auto-scrolling with middle-click on the close btn
@@ -150,7 +299,6 @@
 - Selection: don't use Iterator.prototype.some() until 140ESR
 - Selection: correctly recalculate all selected elements after lock/unlock
 - Selection: allow selection of only pinned or only normal tabs
-- Sidebar: do not handle ctrl+v if target element is input
 - Snapshots: start range selection from the tab selected with long-click
 - Listen keydown events instead of keyup for in-sidebar shortcuts to align with other apps
 - History: search: do not select the first found item  
@@ -186,6 +334,12 @@
 
 ### Localization
 
+- Zh: updated translation (by [@llc0930](https://github.com/llc0930): [#2284](https://github.com/mbnuqw/sidebery/issues/2284))
+- Keybindings: update Tab flip label: remove the part about click  
+  b/c this text was copied from the mouse settings
+- Zh: updated translation (by [@llc0930](https://github.com/llc0930): [#2282](https://github.com/mbnuqw/sidebery/issues/2282))
+- Sync sub-panel, copy by templates (resolves [#2161](https://github.com/mbnuqw/sidebery/issues/2161))  
+- Updated translation (by [@llc0930](https://github.com/llc0930): [#2274](https://github.com/mbnuqw/sidebery/issues/2274))
 - Remove outdated mentioning of horizontal tabs as the native tabs
 - Update zh_CN translation for closing duplicate tabs (by [@ASC8384](https://github.com/ASC8384): [#2261](https://github.com/mbnuqw/sidebery/issues/2261))
 - Updated translation (by [@llc0930](https://github.com/llc0930): [#2260](https://github.com/mbnuqw/sidebery/issues/2260))
